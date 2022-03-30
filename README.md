@@ -99,6 +99,8 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 ### [BONUS] Interactive Prototype
 
+<img src="Prototype_Gif.gif" width=800>
+
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
