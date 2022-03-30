@@ -57,29 +57,37 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
+* Login
+* Sign Up
+   * User can sign up and login to the recently created account
+* Main Screen
+   * The user's profile is in the corner
+   * A selection of television shows that they are following/recommended is displayed
+   * Search bar is also present to find specific shows
+* Details Page
+   * Gives more details about a show, such as descriptions, ratings, etc.
+   * People can see the list of episodes, which will lead to people comments about said episode
+* Episode Comments
+   * A list of comments from other users about the episode selected
+* Group Chat
+   * A list of group chats available for television shows
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* Home
+* Group Chats
+* Detailed Search
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
-   * ...
-* [list second screen here]
-   * [list screen navigation here]
-   * ...
+* Home
+   * Returns the user back to the home screen (or main screen)
+* Group Chats
+   * Shows a list of group chats that you are part of
+* Detailed Search
+   * Gives you more options in what you want to search for
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
