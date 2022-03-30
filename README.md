@@ -95,6 +95,7 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 ### [BONUS] Digital Wireframes & Mockups
 <img src="Lo-Fi_1.png" width=400> <img src="Lo-Fi_2.png" width=400> <img src="Lo-Fi_3.png" width=126>
+<img src="Hi-Fi_1.png" width=400>
 
 ### [BONUS] Interactive Prototype
 
