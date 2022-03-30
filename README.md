@@ -90,8 +90,8 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
    * Gives you more options in what you want to search for
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="paperwireframe1.jpg" width=600>
+<img src="paperwireframe2.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 <img src="Lo-Fi_1.png" width=400> <img src="Lo-Fi_2.png" width=400> <img src="Lo-Fi_3.png" width=126>
