@@ -138,6 +138,153 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 
 ### Networking
-- [Add list of network requests by screen ]
+- HomeFragment
+
+  - (Read/GET) Query following shows from User's list
+
+    ```java
+    ParseQuery<Show> queryFollowingShows = ParseUser.getCurrentUser().getRelation("following").getQuery();
+    queryFollowingShows.findInBackground(new FallCallback<Show>() {
+        @Override
+        public void done(List<Show> shows, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting shows", e);
+                return;
+            }
+            for (Show show : shows) {
+                // do something
+            }
+            showAdapter.clear();
+            showAdapter.addAll(shows);
+        }
+    });
+    ```
+
+- ShowDetailsFragment
+
+  - (Update/PUT) Updating User's following
+
+    ```java
+    ParseRelation<Show> following = ParseUser.getCurrentUser().getRelation("following");
+    if (following.query().contains(thisShow)) {
+        following.remove(thisShow);
+    }
+    else {
+        following.add(thisShow);
+    }
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    currentUser.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+            // do something
+        }
+    });
+    ```
+
+  - (Read/GET) Get the Show's threads
+
+    ```java
+    ParseQuery<Thread> queryShowThreads = thisShow.getRelation("threads").getQuery();
+    queryShowThreads.findInBackground(new FallCallback<Thread>() {
+        @Override
+        public void done(List<Thread> threads, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting threads", e);
+                return;
+            }
+            for (Thread thread : threads) {
+                // do something
+            }
+            threads.clear();
+            threads.addAll(threads);
+        }
+    });
+    ```
+
+- EpisodeThreadFragment
+
+  - (Read/GET) Get the comments on a thread
+
+    ```java
+    ParseQuery<Comment> queryThreadComments = thisShow.getRelation("comments").getQuery();
+    queryThreadComments.findInBackground(new FallCallback<Comment>() {
+        @Override
+        public void done(List<Comment> comments, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting comments", e);
+                return;
+            }
+            for (Comment comment : comments) {
+                // do something
+            }
+            commentAdapter.clear();
+            commentAdapter.addAll(comments);
+        }
+    });
+    ```
+
+  - (Create/POST) Create a comment on the thread
+
+    ```java
+    Comment comment = new Comment();
+    comment.setThread = thisThread;
+    comment.setAuthor = ParseUser.getCurrentUser();
+    comment.setMessage = commentMessage;
+    comment.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue saving comment", e);
+                return;
+            }
+            Log.i(TAG, "Comment saved");
+            // do stuff
+        }
+    });
+    
+    ```
+
+- ShowLiveChatFragment
+
+  - We don't know how to implement live chat yet, so we don't know
+
+- ProfileFragment
+
+  - (Update/PUT) Update User's profile image 
+
+    ```java
+    ParseUser user = ParseUser.getCurrentUser();
+    user.setProfilePicture(newProfilePicture);
+    user.saveInBackground(new SaveCallback() {
+        @Override
+        public void done(ParseException e) {
+            // do something
+        }
+    });
+    ```
+
+- ShowSearchFragment
+
+  - (Read/GET) Get all shows on the app
+
+    ```java
+    ParseQuery<Show> allShows = ParseQuery.getQuery(Show.class);
+    query.findInBackground(new FindCallback<Show>() {
+       @Override
+        public void done(List<Show> shows, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting shows", e);
+                return;
+            }
+            for (Show show : shows) {
+                // do something
+            }
+            showAdapter.clear();
+            showAdapter.addAll(shows);
+        }
+    });
+    ```
+
+
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
