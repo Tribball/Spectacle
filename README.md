@@ -104,7 +104,39 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+**User**
+| Property       | Type   | Description                                      |
+| -------------- | ------ | ------------------------------------------------ |
+| username       | String | unique username of the user                      |
+| password       | String | hidden password of the user                      |
+| profilePicture | File   | profile picture of the user                      |
+| following      | Array  | array of pointers to shows that the user follows |
+
+**Show**
+| Property    | Type   | Description                                             |
+| ----------- | ------ | ------------------------------------------------------- |
+| showName    | String | name of the show, saved from API                        |
+| posterImage | File   | poster image for the show, saved from API               |
+| circleImage | File   | small image for the show, saved from API if it is there |
+| threads     | Array  | array of pointers to threads that are on the show       |
+
+**Thread**
+| Property      | Type    | Description                                                |
+| ------------- | ------- | ---------------------------------------------------------- |
+| show          | Pointer | points to the show the thread is under                     |
+| seasonNumber  | Number  | the shows season number that the thread is under, from api |
+| episodeNumber | Number  | the shows episode number in the season, from api           |
+| comments      | Array   | array of pointers to the commends on the thread            |
+
+**Comment**
+| Property | Type    | Description                                   |
+| -------- | ------- | --------------------------------------------- |
+| thread   | Pointer | points to the thread the comment is placed on |
+| author   | Pointer | points to the author of the comment           |
+| message  | String  | content of the comment                        |
+
+
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
