@@ -7,7 +7,7 @@ import com.parse.ParseRelation;
 
 @ParseClassName("Show")
 public class Show extends ParseObject {
-    public static final String KEY_SHOW_NAME = "snowName";
+    public static final String KEY_SHOW_NAME = "showName";
     public static final String KEY_POSTER_IMAGE = "posterImage";
     public static final String KEY_CIRCLE_IMAGE = "circleImage";
     public static final String KEY_THREADS = "threads";
