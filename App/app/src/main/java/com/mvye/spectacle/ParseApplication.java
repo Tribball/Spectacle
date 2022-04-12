@@ -2,6 +2,7 @@ package com.mvye.spectacle;
 
 import android.app.Application;
 
+import com.mvye.spectacle.models.Comment;
 import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
 import com.parse.Parse;
@@ -15,6 +16,7 @@ public class ParseApplication  extends Application {
 
         ParseObject.registerSubclass(Show.class);
         ParseObject.registerSubclass(Thread.class);
+        ParseObject.registerSubclass(Comment.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("fGx7bgUDXlRKBjh2x62hiRUTXrufAYtApzXSb9uY")
                 .clientKey("FV4MT0IymZ8cUqIazwNR17G7ONd9QU8qQjitn9XR")
