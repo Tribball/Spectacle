@@ -1,6 +1,10 @@
 package com.mvye.spectacle.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mvye.spectacle.R;
 
@@ -52,7 +57,6 @@ public class ProfileFragment extends Fragment {
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
-        tvProfileDescription = view.findViewById(R.id.tvProfileDescription);
 
         btnTakeImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +75,7 @@ public class ProfileFragment extends Fragment {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileproviderr", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
@@ -79,6 +83,21 @@ public class ProfileFragment extends Fragment {
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // by this point we have the camera photo on disk
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // RESIZE BITMAP, see section below
+                // Load the taken image into a preview
+                ivProfile.setImageBitmap(takenImage);
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
