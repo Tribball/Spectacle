@@ -19,14 +19,14 @@
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/buttonTakeImage"
+        android:id="@+id/btnTakeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="158dp"
         android:layout_marginTop="260dp"
-        android:text="@string/button" />
+        android:text="@string/take_photo" />
 
     <TextView
         android:id="@+id/tvUsername"
