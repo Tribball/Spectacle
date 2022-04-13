@@ -1,12 +1,16 @@
 package com.mvye.spectacle;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.mvye.spectacle.models.Comment;
 import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ParseApplication  extends Application {
 

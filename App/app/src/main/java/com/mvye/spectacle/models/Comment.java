@@ -28,11 +28,11 @@ public class Comment extends ParseObject {
         put(KEY_THREAD, thread);
     }
 
-    public void setKeyAuthor(ParseUser user) {
+    public void setAuthor(ParseUser user) {
         put(KEY_AUTHOR, user);
     }
 
-    public void setKeyMessage(String message) {
+    public void setMessage(String message) {
         put(KEY_MESSAGE, message);
     }
 }
