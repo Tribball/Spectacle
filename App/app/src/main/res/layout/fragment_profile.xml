@@ -1,51 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment" >
+    tools:context=".fragments.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/ivProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/btnTakeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="260dp"
-        android:text="@string/take_photo" />
-
+    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="107dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:text="Username" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_profile_fragment" />
 
-    <TextView
-        android:id="@+id/tvProfileDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUsername"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/ivProfile"
-        tools:text="This is a test description about this specific individual. He seems pretty cool, I guess. I'm not sure how much space the description would have." />
-</RelativeLayout>
+</FrameLayout>
