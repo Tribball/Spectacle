@@ -5,7 +5,9 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,15 +29,17 @@ import android.widget.Toast;
 import com.mvye.spectacle.R;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 63;
+    public static final int PICK_PHOTO_CODE = 85;
     private Button btnTakeImage;
+    private Button btnOpenGallery;
     private ImageView ivProfile;
     private TextView tvUsername;
-    private TextView tvProfileDescription;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -55,6 +59,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
+        btnOpenGallery = view.findViewById(R.id.btnGallery);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
 
@@ -64,9 +69,15 @@ public class ProfileFragment extends Fragment {
                 launchCamera();
             }
         });
+
+        btnOpenGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { pickPhoto(); }
+        });
     }
 
     private void launchCamera() {
+        Log.d(TAG, "Opening camera");
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
@@ -115,4 +126,38 @@ public class ProfileFragment extends Fragment {
         // Return the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
+
+    private void pickPhoto(){
+        // Create intent for picking a photo from the gallery
+        Log.d(TAG, "Entered pickPhoto method");
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
+        // So as long as the result is not null, it's safe to use the intent.
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            Log.d(TAG, "Result is not null :)");
+            // Bring up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
+    }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Log.d(TAG, "Entering loadFromUri method");
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
 }
