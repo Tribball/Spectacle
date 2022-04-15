@@ -26,8 +26,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -74,6 +80,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) { pickPhoto(); }
         });
+        setCurrentProfilePicture();
+    }
+
+    private void setCurrentProfilePicture() {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseFile file = (ParseFile) user.get("profilePicture");
+        Glide.with(requireContext()).load(file.getUrl())
+                .override(Target.SIZE_ORIGINAL)
+                .into(ivProfile);
     }
 
     private void launchCamera() {
@@ -106,10 +121,31 @@ public class ProfileFragment extends Fragment {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 ivProfile.setImageBitmap(takenImage);
+                setProfilePicture(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void setProfilePicture(Bitmap takenImage) {
+        ParseUser user = ParseUser.getCurrentUser();
+        user.put("profilePicture", saveProfilePicture(takenImage));
+        user.saveInBackground();
+        Toast.makeText(getContext(), "Picture Saved!", Toast.LENGTH_SHORT).show();
+    }
+
+    private ParseFile saveProfilePicture(Bitmap takenImage) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        takenImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bitmapBytes = stream.toByteArray();
+        ParseFile newProfilePicture = new ParseFile("profilePicture.png", bitmapBytes);
+        try {
+            newProfilePicture.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newProfilePicture;
     }
 
     public File getPhotoFileUri(String fileName) {
