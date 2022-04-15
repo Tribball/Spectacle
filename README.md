@@ -8,7 +8,7 @@ Original App Design Project - README
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
-5. [Sprint 1](#Sprint 1)
+5. [Sprint 1](#Sprint-1)
 
 ## Overview
 ### Description
