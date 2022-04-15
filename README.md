@@ -31,7 +31,7 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 * ~~User should be able to login to the app~~
 * User should be able to sign up and create a new account
-* User should be able to set a profile picture in the app
+* ~~User should be able to set a profile picture in the app~~
 * ~~User should be able to see the shows they’re following~~
 * User should be able to search for new shows to follow
 * User should be able to see a detailed view of a TV show
@@ -294,6 +294,6 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 ### Demo 1
 
-Login, HomeFragment, BottomNavigation, ShowDetailsFragment
+Login, HomeFragment, BottomNavigation, ShowDetailsFragment, ShowSearchFragment, ProfileFragment, Setting a profile picture, Logout
 
 <img src='demo_sprint1b.gif' title='Video Walkthrough 1' width='300' alt='Video Walkthrough 1' />
