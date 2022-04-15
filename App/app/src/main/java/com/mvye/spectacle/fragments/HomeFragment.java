@@ -66,18 +66,29 @@ public class HomeFragment extends Fragment {
         recyclerViewRecommendedShows = view.findViewById(R.id.recyclerViewRecommendedShows);
         followingShows = new ArrayList<>();
         recommendedShows = new ArrayList<>();
-        ShowAdapter.OnPosterImageClickListener onPosterImageClickListener = new ShowAdapter.OnPosterImageClickListener() {
+        ShowAdapter.OnPosterImageClickListener onFollowingPosterImageClickListener = new ShowAdapter.OnPosterImageClickListener() {
             @Override
             public void OnPosterImageClickListener(int postion) {
-                // TODO: Open ShowDetailsFragment using the show at position
+                openShowDetailsFragment(followingShows.get(postion));
             }
         };
-        followingShowsAdapter = new ShowAdapter(getContext(), followingShows, onPosterImageClickListener);
-        recommendedShowsAdapter = new ShowAdapter(getContext(), recommendedShows, onPosterImageClickListener);
+        ShowAdapter.OnPosterImageClickListener onRecommendedPosterImageClickListener = new ShowAdapter.OnPosterImageClickListener() {
+            @Override
+            public void OnPosterImageClickListener(int postion) {
+                openShowDetailsFragment(recommendedShows.get(postion));
+            }
+        };
+        followingShowsAdapter = new ShowAdapter(getContext(), followingShows, onFollowingPosterImageClickListener);
+        recommendedShowsAdapter = new ShowAdapter(getContext(), recommendedShows, onRecommendedPosterImageClickListener);
         recyclerViewFollowingShows.setAdapter(followingShowsAdapter);
         recyclerViewRecommendedShows.setAdapter(recommendedShowsAdapter);
         recyclerViewFollowingShows.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         recyclerViewRecommendedShows.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+    }
+
+    private void openShowDetailsFragment(Show show) {
+        ShowDetailsFragment showDetailsFragment = ShowDetailsFragment.newInstance(show);
+        getParentFragmentManager().beginTransaction().replace(R.id.frameLayoutContainer, showDetailsFragment).addToBackStack("").commit();
     }
 
     private void setupToolbar(View view) {
