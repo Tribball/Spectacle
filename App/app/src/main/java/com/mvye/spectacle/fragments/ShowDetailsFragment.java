@@ -2,59 +2,50 @@ package com.mvye.spectacle.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.models.Show;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShowDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Objects;
+
 public class ShowDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ImageView imageViewPosterImage;
+    TextView textViewShowName;
+    TextView textViewShowDescription;
+    TextView textViewScore;
+    Button buttonFollow;
+    RecyclerView recyclerViewEpisodes;
+    Show show;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public ShowDetailsFragment() {}
 
-    public ShowDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ShowDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ShowDetailsFragment newInstance(String param1, String param2) {
-        ShowDetailsFragment fragment = new ShowDetailsFragment();
+    public static ShowDetailsFragment newInstance(Show show) {
+        ShowDetailsFragment showDetailsFragment = new ShowDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        args.putParcelable("show", show);
+        showDetailsFragment.setArguments(args);
+        return showDetailsFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        assert getArguments() != null;
+        show = getArguments().getParcelable("show");
     }
 
     @Override
@@ -62,5 +53,29 @@ public class ShowDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_show_details, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setupVariables(view);
+        setPosterImageAndName();
+        // TODO: Call API to populate details
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void setupVariables(View view) {
+        imageViewPosterImage = view.findViewById(R.id.imageViewPosterImage);
+        textViewShowName = view.findViewById(R.id.textViewShowName);
+        textViewShowDescription = view.findViewById(R.id.textViewShowDescription);
+        textViewScore = view.findViewById(R.id.textViewScore);
+        buttonFollow = view.findViewById(R.id.buttonFollow);
+        recyclerViewEpisodes = view.findViewById(R.id.recyclerViewEpisodes);
+    }
+
+    private void setPosterImageAndName() {
+        Glide.with(requireContext()).load(show.getPosterImage().getUrl())
+                .override(Target.SIZE_ORIGINAL)
+                .into(imageViewPosterImage);
+        textViewShowName.setText(show.getShowName());
     }
 }

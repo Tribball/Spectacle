@@ -2,65 +2,137 @@ package com.mvye.spectacle.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.adapters.ShowAdapter;
+import com.mvye.spectacle.models.Show;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    Toolbar toolbar;
+    SearchView searchView;
+    RecyclerView recyclerViewFollowingShows;
+    RecyclerView recyclerViewRecommendedShows;
+    List<Show> followingShows;
+    List<Show> recommendedShows;
+    ShowAdapter followingShowsAdapter;
+    ShowAdapter recommendedShowsAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public HomeFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupRecyclerViews(view);
+        setupToolbar(view);
+        queryFollowingShows();
+        queryRecommendedShows();
+    }
+
+    private void setupRecyclerViews(View view) {
+        recyclerViewFollowingShows = view.findViewById(R.id.recyclerViewFollowingShows);
+        recyclerViewRecommendedShows = view.findViewById(R.id.recyclerViewRecommendedShows);
+        followingShows = new ArrayList<>();
+        recommendedShows = new ArrayList<>();
+        ShowAdapter.OnPosterImageClickListener onFollowingPosterImageClickListener = new ShowAdapter.OnPosterImageClickListener() {
+            @Override
+            public void OnPosterImageClickListener(int postion) {
+                openShowDetailsFragment(followingShows.get(postion));
+            }
+        };
+        ShowAdapter.OnPosterImageClickListener onRecommendedPosterImageClickListener = new ShowAdapter.OnPosterImageClickListener() {
+            @Override
+            public void OnPosterImageClickListener(int postion) {
+                openShowDetailsFragment(recommendedShows.get(postion));
+            }
+        };
+        followingShowsAdapter = new ShowAdapter(getContext(), followingShows, onFollowingPosterImageClickListener);
+        recommendedShowsAdapter = new ShowAdapter(getContext(), recommendedShows, onRecommendedPosterImageClickListener);
+        recyclerViewFollowingShows.setAdapter(followingShowsAdapter);
+        recyclerViewRecommendedShows.setAdapter(recommendedShowsAdapter);
+        recyclerViewFollowingShows.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        recyclerViewRecommendedShows.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+    }
+
+    private void openShowDetailsFragment(Show show) {
+        ShowDetailsFragment showDetailsFragment = ShowDetailsFragment.newInstance(show);
+        getParentFragmentManager().beginTransaction().replace(R.id.frameLayoutContainer, showDetailsFragment).addToBackStack("").commit();
+    }
+
+    private void setupToolbar(View view) {
+        toolbar = view.findViewById(R.id.toolbar);
+        searchView = (SearchView) toolbar.getMenu().findItem(R.id.search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // TODO: Do something searchy
+                return false;
+            }
+        });
+    }
+
+    private void queryFollowingShows() {
+        ParseQuery<ParseObject> query = ParseUser.getCurrentUser().getRelation("following").getQuery();
+        query.include("Show");
+        List<Show> shows = new ArrayList<>();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> showList, ParseException e) {
+                for (ParseObject show : showList) {
+                    shows.add((Show) show);
+                }
+                Log.i("HomeFragment", "Size is: " + shows.size());
+                followingShowsAdapter.clear();
+                followingShowsAdapter.addAll(shows);
+            }
+        });
+    }
+
+    private void queryRecommendedShows() {
+        ParseQuery<Show> query = ParseQuery.getQuery(Show.class);
+        query.findInBackground(new FindCallback<Show>() {
+            @Override
+            public void done(List<Show> showList, ParseException e) {
+                recommendedShowsAdapter.clear();
+                recommendedShowsAdapter.addAll(showList);
+            }
+        });
     }
 }
