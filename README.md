@@ -296,4 +296,4 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 
 Login, HomeFragment, BottomNavigation, ShowDetailsFragment
 
-<img src='SpectacleSprint1Demo1.gif' title='Video Walkthrough 1' width='750' alt='Video Walkthrough 1' />
+<img src='demo_sprint1b.gif' title='Video Walkthrough 1' width='300' alt='Video Walkthrough 1' />
