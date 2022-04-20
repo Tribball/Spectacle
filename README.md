@@ -9,6 +9,7 @@ Original App Design Project - README
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
 5. [Sprint 1](#Sprint-1)
+6. [Sprint 2](#Sprint-2)
 
 ## Overview
 ### Description
@@ -34,10 +35,10 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 * ~~User should be able to set a profile picture in the app~~
 * ~~User should be able to see the shows they’re following~~
 * User should be able to search for new shows to follow
-* User should be able to see a detailed view of a TV show
-  - Description of show
-  - Seasons and Episode count
-  - Ratings
+* ~~User should be able to see a detailed view of a TV show~~
+  - ~~Description of show~~
+  - ~~Seasons and Episode count~~
+  - ~~Ratings~~
   - Hub Page for the show
 * User should be able to see discussion threads for every episode in the show
 * User should be able to comment on discussion threads and see their comments show up
@@ -297,3 +298,11 @@ Our app is meant to be a place for you to comment on episodes of shows you're wa
 Login, HomeFragment, BottomNavigation, ShowDetailsFragment, ShowSearchFragment, ProfileFragment, Setting a profile picture, Logout
 
 <img src='demo_sprint1b.gif' title='Video Walkthrough 1' width='300' alt='Video Walkthrough 1' />
+
+
+
+# Sprint 2
+
+ShowDetailView being populated via API call
+
+<img src='SpectacleSprint2Demo1.gif' title='Video Walkthrough 1' width='600' alt='Video Walkthrough 1' />
