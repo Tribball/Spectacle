@@ -71,12 +71,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewScore"
         tools:text="Follow" />
 
+    <TextView
+        android:id="@+id/textViewSeasonCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFollow"
+        tools:text="5 seasons" />
+
+    <TextView
+        android:id="@+id/textViewEpisodeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewSeasonCount"
+        app:layout_constraintTop_toBottomOf="@+id/buttonFollow"
+        tools:text="143 episodes" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEpisodes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPosterImage" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSeasonCount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

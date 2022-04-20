@@ -11,6 +11,7 @@ public class Show extends ParseObject {
     public static final String KEY_POSTER_IMAGE = "posterImage";
     public static final String KEY_CIRCLE_IMAGE = "circleImage";
     public static final String KEY_THREADS = "threads";
+    public static final String KEY_SHOW_ID = "showId";
 
     public Show() {}
 
@@ -28,6 +29,10 @@ public class Show extends ParseObject {
 
     public ParseRelation<Thread> getThreads() {
         return getRelation(KEY_THREADS);
+    }
+
+    public String getShowId() {
+        return getString(KEY_SHOW_ID);
     }
 
     public void setShowName(String showName) {
@@ -50,5 +55,9 @@ public class Show extends ParseObject {
     public void removeThread(Thread thread) {
         getThreads().remove(thread);
         saveInBackground();
+    }
+
+    public void setShowId(String showId) {
+        put(KEY_SHOW_ID, showId);
     }
 }
