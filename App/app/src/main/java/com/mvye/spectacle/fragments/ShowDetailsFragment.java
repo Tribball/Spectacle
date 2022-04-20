@@ -129,8 +129,8 @@ public class ShowDetailsFragment extends Fragment {
                 .into(imageViewPosterImage);
         textViewShowDescription.setText(description);
         textViewScore.setText(String.format(Locale.US, "%.1f", voteAverage));
-        textViewSeasonCount.setText(String.format(Locale.US, "%x", numberOfSeasons));
-        textViewEpisodeCount.setText(String.format(Locale.US, "%x", numberOfEpisodes));
+        textViewSeasonCount.setText(String.format(Locale.US, "%x seasons", numberOfSeasons));
+        textViewEpisodeCount.setText(String.format(Locale.US, "%x episodes", numberOfEpisodes));
     }
 
     private void setPosterImageAndName() {
