@@ -1,38 +1,77 @@
 package com.mvye.spectacle.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.LoginActivity;
 >>>>>>> Stashed changes
+=======
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+>>>>>>> main
 import com.mvye.spectacle.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> main
     public static final String TAG = "ProfileFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 63;
     public static final int PICK_PHOTO_CODE = 85;
     private Button btnTakeImage;
     private Button btnOpenGallery;
+<<<<<<< HEAD
     private Button btnLogout;
+=======
+>>>>>>> main
     private ImageView ivProfile;
     private TextView tvUsername;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -43,15 +82,21 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> main
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnOpenGallery = view.findViewById(R.id.btnGallery);
+<<<<<<< HEAD
         btnLogout = view.findViewById(R.id.btnLogout);
+=======
+>>>>>>> main
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
 
@@ -67,12 +112,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) { pickPhoto(); }
         });
         setCurrentProfilePicture();
+<<<<<<< HEAD
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logOutUser();
             }
         });
+=======
+>>>>>>> main
     }
 
     private void setCurrentProfilePicture() {
@@ -188,6 +236,7 @@ public class ProfileFragment extends Fragment {
         return image;
     }
 
+<<<<<<< HEAD
     private void logOutUser() {
         ParseUser.logOut();
         goToMainActivity();
@@ -201,4 +250,6 @@ public class ProfileFragment extends Fragment {
     }
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 }
