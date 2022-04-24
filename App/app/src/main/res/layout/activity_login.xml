@@ -82,4 +82,15 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/etLoginUsername"
         app:layout_constraintStart_toStartOf="@+id/etLoginUsername" />
+
+    <ImageView
+        android:id="@+id/ivLoginLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/spectaclelogo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
