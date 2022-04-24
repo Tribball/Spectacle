@@ -204,7 +204,7 @@ public class ProfileFragment extends Fragment {
         }
         return image;
     }
-    
+
     private void logOutUser() {
         ParseUser.logOut();
         goToMainActivity();
