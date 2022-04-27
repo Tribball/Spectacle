@@ -2,13 +2,19 @@ package com.mvye.spectacle.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.models.Episode;
+import com.mvye.spectacle.models.Show;
+import com.mvye.spectacle.models.Thread;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,44 +23,36 @@ import com.mvye.spectacle.R;
  */
 public class EpisodeThreadFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String TAG = "EpisodeThreadFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // TODO: Place the different image views, text views, etc
 
-    public EpisodeThreadFragment() {
-        // Required empty public constructor
-    }
+    Show show;
+    Thread thread;
+    String episodeName;
+    String episodeOverview;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EpisodeThreadFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EpisodeThreadFragment newInstance(String param1, String param2) {
-        EpisodeThreadFragment fragment = new EpisodeThreadFragment();
+    public EpisodeThreadFragment() { }
+
+    public static EpisodeThreadFragment newInstance(Show show, Thread thread, String episodeName, String episodeOverview) {
+        EpisodeThreadFragment episodeThreadFragment = new EpisodeThreadFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        args.putParcelable("show", show);
+        args.putParcelable("thread", thread);
+        args.putString("episodeName", episodeName);
+        args.putString("episodeOverview", episodeOverview);
+        episodeThreadFragment.setArguments(args);
+        return episodeThreadFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        assert getArguments() != null;
+        show = getArguments().getParcelable("show");
+        thread = getArguments().getParcelable("thread");
+        episodeName = getArguments().getString("episodeName");
+        episodeOverview = getArguments().getString("episodeOverview");
     }
 
     @Override
@@ -62,5 +60,14 @@ public class EpisodeThreadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_episode_thread, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "This is show: " + show.getShowName() + " season " + thread.getSeasonNumber() + " episode " + thread.getEpisodeNumber() + ": " + episodeName);
+        Log.i(TAG, "Overview: " + episodeOverview);
+        // setupVariables
+        // do other stuff
+        super.onViewCreated(view, savedInstanceState);
     }
 }

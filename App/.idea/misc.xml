@@ -17,7 +17,9 @@
         <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/fragment_show_details.xml" value="0.268" />
         <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/fragment_show_search.xml" value="0.2361111111111111" />
-        <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/item_show.xml" value="0.22037037037037038" />
+        <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/item_episode.xml" value="0.4" />
+        <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/item_livechat.xml" value="0.5" />
+        <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/layout/item_show.xml" value="0.36" />
         <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.2361111111111111" />
         <entry key="..\:/Users/mervy/Desktop/CS388/Spectacle/App/app/src/main/res/menu/menu_toolbar.xml" value="0.22037037037037038" />
       </map>

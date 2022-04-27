@@ -5,12 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,12 +24,22 @@ import com.bumptech.glide.request.target.Target;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.adapters.EpisodeAdapter;
+import com.mvye.spectacle.models.Episode;
 import com.mvye.spectacle.models.Show;
+import com.mvye.spectacle.models.Thread;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.Headers;
@@ -44,10 +56,11 @@ public class ShowDetailsFragment extends Fragment {
     TextView textViewScore;
     Button buttonFollow;
     Spinner spinnerSeasons;
-    TextView textViewSeasonCount;
-    TextView textViewEpisodeCount;
     RecyclerView recyclerViewEpisodes;
+
     Show show;
+    List<Episode> episodes;
+    EpisodeAdapter episodeAdapter;
 
     public ShowDetailsFragment() {}
 
@@ -93,8 +106,6 @@ public class ShowDetailsFragment extends Fragment {
         textViewScore = view.findViewById(R.id.textViewScore);
         buttonFollow = view.findViewById(R.id.buttonFollow);
         spinnerSeasons = view.findViewById(R.id.spinnerSeasons);
-        textViewSeasonCount = view.findViewById(R.id.textViewSeasonCount);
-        textViewEpisodeCount = view.findViewById(R.id.textViewEpisodeCount);
         recyclerViewEpisodes = view.findViewById(R.id.recyclerViewEpisodes);
     }
 
@@ -140,6 +151,98 @@ public class ShowDetailsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, seasons);
         spinnerSeasons.setAdapter(adapter);
         spinnerSeasons.setSelection(1);
+        spinnerSeasons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.i(TAG, "onItemSelected: position " + position + " " + adapterView.getItemAtPosition(position).toString());
+                fetchShowSeasonEpisodes(show.getShowId(), position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void fetchShowSeasonEpisodes(String showId, int position) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = String.format(TV_SHOW_SEASONS, showId, position);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject episodeResults  = json.jsonObject;
+                try {
+                    getEpisodeDetails(episodeResults);
+                } catch (JSONException e) {
+                    Log.e(TAG, "onSuccess: jsonarray error");
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure: " + statusCode + " " + headers + " " + response);
+                setPosterImageAndName();
+            }
+        });
+    }
+
+    private void getEpisodeDetails(JSONObject results) throws JSONException {
+        JSONArray episodesList = results.getJSONArray("episodes");
+        episodes = new ArrayList<>();
+        episodes.addAll(Episode.fromJsonArray(episodesList));
+        populateEpisodeRecyclerView();
+    }
+
+    private void populateEpisodeRecyclerView() {
+        EpisodeAdapter.OnButtonClickListener onButtonClickListener = new EpisodeAdapter.OnButtonClickListener() {
+            @Override
+            public void OnButtonClickListener(int position) {
+                ParseQuery<Thread> query = show.getThreads().getQuery();
+                query.include("Thread");
+                int seasonNumber = episodes.get(position).getSeasonNumber();
+                int episodeNumber = episodes.get(position).getEpisodeNumber();
+                Log.i(TAG, "OnButtonClickListener: Clicked season " + seasonNumber + " episode " + episodeNumber);
+                query.whereEqualTo(Thread.KEY_SEASON_NUMBER, seasonNumber);
+                query.whereEqualTo(Thread.KEY_EPISODE_NUMBER, episodeNumber);
+                query.findInBackground(new FindCallback<Thread>() {
+                    @Override
+                    public void done(List<Thread> threads, ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Issue getting threads", e);
+                            return;
+                        }
+                        if (threads.isEmpty()) {
+                            // create new thread
+                            Thread thread = new Thread();
+                            thread.setShow(show);
+                            thread.setSeasonNumber(seasonNumber);
+                            thread.setEpisodeNumber(episodeNumber);
+                            thread.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    // add to show
+                                    show.addThread(thread);
+                                    // send to fragment
+                                    openEpisodeThreadFragment(thread, episodes.get(position));
+                                }
+                            });
+                        }
+                        else {
+                            // send to fragment
+                            openEpisodeThreadFragment(threads.get(0), episodes.get(position));
+                        }
+                    }
+                });
+            }
+        };
+        episodeAdapter = new EpisodeAdapter(getContext(), episodes, onButtonClickListener);
+        recyclerViewEpisodes.setAdapter(episodeAdapter);
+        recyclerViewEpisodes.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+    }
+
+    private void openEpisodeThreadFragment(Thread thread, Episode episode) {
+        EpisodeThreadFragment episodeThreadFragment = EpisodeThreadFragment.newInstance(show, thread, episode.getEpisodeName(), episode.getEpisodeOverview());
+        getParentFragmentManager().beginTransaction().replace(R.id.frameLayoutContainer, episodeThreadFragment).addToBackStack("").commit();
     }
 
     private void setShowDetails(String showName, String posterPath, Double voteAverage, String description, int numberOfSeasons, int numberOfEpisodes) {
@@ -149,8 +252,6 @@ public class ShowDetailsFragment extends Fragment {
                 .into(imageViewPosterImage);
         textViewShowDescription.setText(description);
         textViewScore.setText(String.format(Locale.US, "%.1f/10", voteAverage));
-        textViewSeasonCount.setText(String.format(Locale.US, "%x seasons", numberOfSeasons));
-        textViewEpisodeCount.setText(String.format(Locale.US, "%x episodes", numberOfEpisodes));
     }
 
 
