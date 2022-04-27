@@ -26,6 +26,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.button.MaterialButton;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.adapters.EpisodeAdapter;
+import com.mvye.spectacle.models.ChatRoom;
 import com.mvye.spectacle.models.Episode;
 import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
@@ -117,13 +118,31 @@ public class ShowDetailsFragment extends Fragment {
         buttonLiveChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openLiveChatFragment();
+                ChatRoom room = show.getRoom();
+                if (room != null) {
+                    // open existing room
+                    openLiveChatFragment(room);
+                }
+                else {
+                    // create new room
+                    room = new ChatRoom();
+                    room.setShow(show);
+                    ChatRoom finalRoom = room;
+                    room.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            show.setRoom(finalRoom);
+                            show.saveInBackground();
+                            openLiveChatFragment(finalRoom);
+                        }
+                    });
+                }
             }
         });
     }
 
-    private void openLiveChatFragment() {
-        ShowLiveChatFragment liveChatFragment = ShowLiveChatFragment.newInstance(show);
+    private void openLiveChatFragment(ChatRoom room) {
+        ShowLiveChatFragment liveChatFragment = ShowLiveChatFragment.newInstance(show, room);
         getParentFragmentManager().beginTransaction().replace(R.id.frameLayoutContainer, liveChatFragment).addToBackStack("").commit();
     }
 

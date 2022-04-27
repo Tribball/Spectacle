@@ -15,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.models.ChatMessage;
+import com.mvye.spectacle.models.ChatRoom;
 import com.mvye.spectacle.models.Show;
+
+import java.util.List;
 
 public class ShowLiveChatFragment extends Fragment {
 
@@ -26,13 +30,16 @@ public class ShowLiveChatFragment extends Fragment {
     private RecyclerView rvComments;
 
     Show show;
+    ChatRoom room;
+    List<ChatMessage> messages;
 
     public ShowLiveChatFragment() { }
 
-    public static ShowLiveChatFragment newInstance(Show show) {
+    public static ShowLiveChatFragment newInstance(Show show, ChatRoom room) {
         ShowLiveChatFragment showLiveChatFragment = new ShowLiveChatFragment();
         Bundle args = new Bundle();
         args.putParcelable("show", show);
+        args.putParcelable("room", room);
         showLiveChatFragment.setArguments(args);
         return showLiveChatFragment;
     }
@@ -42,6 +49,7 @@ public class ShowLiveChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
         show = getArguments().getParcelable("show");
+        room = getArguments().getParcelable("room");
     }
 
     @Override
