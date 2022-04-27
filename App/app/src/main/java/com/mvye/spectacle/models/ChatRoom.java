@@ -1,8 +1,10 @@
 package com.mvye.spectacle.models;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
 
+@ParseClassName("ChatRoom")
 public class ChatRoom extends ParseObject {
     public static final String KEY_SHOW = "show";
     public static final String KEY_MESSAGES = "messages";
