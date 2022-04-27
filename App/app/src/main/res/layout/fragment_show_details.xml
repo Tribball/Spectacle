@@ -22,7 +22,7 @@
         android:layout_height="300dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:contentDescription="Show Poster Image"
+        android:contentDescription="@string/show_poster_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:srcCompat="@tools:sample/avatars" />
@@ -31,7 +31,7 @@
         android:id="@+id/textViewShowName"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,9 +86,29 @@
         android:id="@+id/recyclerViewEpisodes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerSeasons" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonLiveChat"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/primary_light"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/live_chat"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/ic_chat"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewEpisodes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
