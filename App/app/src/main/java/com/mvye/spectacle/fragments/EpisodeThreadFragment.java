@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.models.Episode;
@@ -66,6 +67,7 @@ public class EpisodeThreadFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "This is show: " + show.getShowName() + " season " + thread.getSeasonNumber() + " episode " + thread.getEpisodeNumber() + ": " + episodeName);
         Log.i(TAG, "Overview: " + episodeOverview);
+        Toast.makeText(getContext(), "This is show: " + show.getShowName() + " season " + thread.getSeasonNumber() + " episode " + thread.getEpisodeNumber() + ": " + episodeName, Toast.LENGTH_LONG).show();
         // setupVariables
         // do other stuff
         super.onViewCreated(view, savedInstanceState);
