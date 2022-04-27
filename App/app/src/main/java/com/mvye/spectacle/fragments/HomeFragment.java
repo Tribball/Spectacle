@@ -14,12 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.adapters.ShowAdapter;
 import com.mvye.spectacle.models.Show;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -38,6 +42,7 @@ public class HomeFragment extends Fragment {
     List<Show> recommendedShows;
     ShowAdapter followingShowsAdapter;
     ShowAdapter recommendedShowsAdapter;
+    ImageView ivHomeProfile;
 
     public HomeFragment() { }
 
@@ -59,6 +64,16 @@ public class HomeFragment extends Fragment {
         setupToolbar(view);
         queryFollowingShows();
         queryRecommendedShows();
+        ivHomeProfile = view.findViewById(R.id.ivHomeProfile);
+        setCurrentProfilePicture();
+    }
+
+    private void setCurrentProfilePicture() {
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseFile file = (ParseFile) user.get("profilePicture");
+        Glide.with(requireContext()).load(file.getUrl())
+                .override(Target.SIZE_ORIGINAL)
+                .into(ivHomeProfile);
     }
 
     private void setupRecyclerViews(View view) {

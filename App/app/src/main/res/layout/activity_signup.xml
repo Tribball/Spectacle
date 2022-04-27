@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000C38"
+    tools:context=".SignupActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignupReturn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:height="50dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#001c7d"
+        android:text="Return"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSignupUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username:"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/etSignupUsername"
+        app:layout_constraintStart_toStartOf="@+id/etSignupUsername" />
+
+    <EditText
+        android:id="@+id/etSignupUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:width="250dp"
+        android:background="@drawable/roundededittext"
+        android:ems="15"
+        android:inputType="textPersonName"
+        android:minHeight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignupReturn" />
+
+    <TextView
+        android:id="@+id/tvSignupPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/etSignupPassword"
+        app:layout_constraintStart_toStartOf="@+id/etSignupPassword" />
+
+    <EditText
+        android:id="@+id/etSignupPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="50dp"
+        android:width="250dp"
+        android:background="@drawable/roundededittext"
+        android:ems="15"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSignupUsername" />
+
+    <TextView
+        android:id="@+id/tvSignupEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/etSignupEmail"
+        app:layout_constraintStart_toStartOf="@+id/etSignupEmail" />
+
+    <EditText
+        android:id="@+id/etSignupEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="50dp"
+        android:width="250dp"
+        android:background="@drawable/roundededittext"
+        android:ems="15"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSignupPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignup"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:height="50dp"
+        android:background="@drawable/roundedbutton"
+        android:backgroundTint="#001c7d"
+        android:text="Sign up"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSignupEmail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

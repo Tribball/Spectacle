@@ -25,7 +25,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
+import com.mvye.spectacle.LoginActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
@@ -44,11 +46,11 @@ public class ProfileFragment extends Fragment {
     public static final int PICK_PHOTO_CODE = 85;
     private Button btnTakeImage;
     private Button btnOpenGallery;
+    private Button btnLogout;
     private ImageView ivProfile;
     private TextView tvUsername;
     private File photoFile;
     public String photoFileName = "photo.jpg";
-
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -66,6 +68,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnTakeImage = view.findViewById(R.id.btnTakeImage);
         btnOpenGallery = view.findViewById(R.id.btnGallery);
+        btnLogout = view.findViewById(R.id.btnLogout);
         ivProfile = view.findViewById(R.id.ivProfile);
         tvUsername = view.findViewById(R.id.tvUsername);
 
@@ -81,6 +84,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) { pickPhoto(); }
         });
         setCurrentProfilePicture();
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOutUser();
+            }
+        });
     }
 
     private void setCurrentProfilePicture() {
@@ -196,4 +205,15 @@ public class ProfileFragment extends Fragment {
         return image;
     }
 
+    private void logOutUser() {
+        ParseUser.logOut();
+        goToMainActivity();
+        Toast.makeText(getContext(), "Successfully Logged Out", Toast.LENGTH_SHORT).show();
+    }
+
+    private void goToMainActivity() {
+        Intent i = new Intent(getContext(), LoginActivity.class);
+        startActivity(i);
+
+    }
 }
