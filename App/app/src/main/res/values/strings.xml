@@ -17,4 +17,5 @@
     <string name="search">Search</string>
     <string name="show_poster_image">Show Poster Image</string>
     <string name="live_chat">Live Chat</string>
+    <string name="send">Send</string>
 </resources>

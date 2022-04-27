@@ -10,10 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.models.ChatMessage;
 import com.mvye.spectacle.models.ChatRoom;
@@ -25,9 +29,11 @@ public class ShowLiveChatFragment extends Fragment {
 
     public static final String TAG = "ShowLiveChatFragment";
 
-    private ImageView ivLivechatPoster;
-    private TextView tvTitleChat;
-    private RecyclerView rvComments;
+    ImageView imageViewChatPoster;
+    TextView textViewChatTitle;
+    RecyclerView recyclerViewChat;
+    EditText editTextMessage;
+    ImageButton imageButtonSend;
 
     Show show;
     ChatRoom room;
@@ -62,7 +68,24 @@ public class ShowLiveChatFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setupVariables(view);
+        setShowPosterAndTitle();
         Toast.makeText(getContext(), "This is a livechat for " + show.getShowName(), Toast.LENGTH_SHORT).show();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void setupVariables(View view) {
+        imageViewChatPoster = view.findViewById(R.id.imageViewChatPoster);
+        textViewChatTitle = view.findViewById(R.id.textViewChatTitle);
+        recyclerViewChat = view.findViewById(R.id.recyclerViewChat);
+        editTextMessage = view.findViewById(R.id.editTextMessage);
+        imageButtonSend = view.findViewById(R.id.imageButtonSend);
+    }
+
+    private void setShowPosterAndTitle() {
+        Glide.with(requireContext()).load(show.getPosterImage().getUrl())
+                .override(Target.SIZE_ORIGINAL)
+                .into(imageViewChatPoster);
+        textViewChatTitle.setText(String.format("%s Chat", show.getShowName()));
     }
 }
