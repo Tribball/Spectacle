@@ -3,6 +3,8 @@ package com.mvye.spectacle;
 import android.app.Application;
 import android.util.Log;
 
+import com.mvye.spectacle.models.ChatMessage;
+import com.mvye.spectacle.models.ChatRoom;
 import com.mvye.spectacle.models.Comment;
 import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
@@ -21,6 +23,8 @@ public class ParseApplication  extends Application {
         ParseObject.registerSubclass(Show.class);
         ParseObject.registerSubclass(Thread.class);
         ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(ChatRoom.class);
+        ParseObject.registerSubclass(ChatMessage.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("fGx7bgUDXlRKBjh2x62hiRUTXrufAYtApzXSb9uY")
                 .clientKey("FV4MT0IymZ8cUqIazwNR17G7ONd9QU8qQjitn9XR")
