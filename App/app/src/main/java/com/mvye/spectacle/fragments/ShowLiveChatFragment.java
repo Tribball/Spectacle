@@ -12,17 +12,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.models.Show;
 
 public class ShowLiveChatFragment extends Fragment {
+
+    public static final String TAG = "ShowLiveChatFragment";
 
     private ImageView ivLivechatPoster;
     private TextView tvTitleChat;
     private RecyclerView rvComments;
 
-    public ShowLiveChatFragment() {
-        // Required empty public constructor
+    Show show;
+
+    public ShowLiveChatFragment() { }
+
+    public static ShowLiveChatFragment newInstance(Show show) {
+        ShowLiveChatFragment showLiveChatFragment = new ShowLiveChatFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("show", show);
+        showLiveChatFragment.setArguments(args);
+        return showLiveChatFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+        show = getArguments().getParcelable("show");
     }
 
     @Override
@@ -32,10 +51,10 @@ public class ShowLiveChatFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_show_live_chat, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Toast.makeText(getContext(), "This is a livechat for " + show.getShowName(), Toast.LENGTH_SHORT).show();
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 }

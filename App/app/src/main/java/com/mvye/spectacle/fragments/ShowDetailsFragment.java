@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.button.MaterialButton;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.adapters.EpisodeAdapter;
 import com.mvye.spectacle.models.Episode;
@@ -57,6 +58,7 @@ public class ShowDetailsFragment extends Fragment {
     Button buttonFollow;
     Spinner spinnerSeasons;
     RecyclerView recyclerViewEpisodes;
+    MaterialButton buttonLiveChat;
 
     Show show;
     List<Episode> episodes;
@@ -89,6 +91,7 @@ public class ShowDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupVariables(view);
+        setupButtons();
         String showId = show.getShowId();
         if (showId != null) {
             fetchShowData(showId);
@@ -107,6 +110,21 @@ public class ShowDetailsFragment extends Fragment {
         buttonFollow = view.findViewById(R.id.buttonFollow);
         spinnerSeasons = view.findViewById(R.id.spinnerSeasons);
         recyclerViewEpisodes = view.findViewById(R.id.recyclerViewEpisodes);
+        buttonLiveChat = view.findViewById(R.id.buttonLiveChat);
+    }
+
+    private void setupButtons() {
+        buttonLiveChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLiveChatFragment();
+            }
+        });
+    }
+
+    private void openLiveChatFragment() {
+        ShowLiveChatFragment liveChatFragment = ShowLiveChatFragment.newInstance(show);
+        getParentFragmentManager().beginTransaction().replace(R.id.frameLayoutContainer, liveChatFragment).addToBackStack("").commit();
     }
 
     private void fetchShowData(String showId) {
