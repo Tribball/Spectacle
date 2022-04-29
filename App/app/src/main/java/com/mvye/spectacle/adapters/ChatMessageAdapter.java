@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.models.ChatMessage;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -23,9 +24,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     private static final int MESSAGE_OUTGOING = 10101;
     private static final int MESSAGE_INCOMING = 11111;
 
-    private Context context;
+    Context context;
     ParseUser user;
-    private List<ChatMessage> messages;
+    List<ChatMessage> messages;
 
     public ChatMessageAdapter(Context context, ParseUser user, List<ChatMessage> messages) {
         this.context = context;
@@ -37,11 +38,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     @Override
     public ChatMessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == MESSAGE_OUTGOING) {
-            View messageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.livechat_outgoing, parent, false);
+            View messageView = LayoutInflater.from(context).inflate(R.layout.livechat_outgoing, parent, false);
             return new OutgoingChatMessageViewHolder(messageView);
         }
         else if (viewType == MESSAGE_INCOMING) {
-            View messageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.livechat_incoming, parent, false);
+            View messageView = LayoutInflater.from(context).inflate(R.layout.livechat_incoming, parent, false);
             return new IncomingChatMessageViewHolder(messageView);
         }
         else {
@@ -96,11 +97,17 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         private void setupVariables(View itemView) {
             imageViewProfileMe = itemView.findViewById(R.id.imageViewProfileMe);
             textViewTimestamp = itemView.findViewById(R.id.textViewTimestamp);
-            textViewMessageMe = itemView.findViewById(R.id.textViewLivechatComment);
+            textViewMessageMe = itemView.findViewById(R.id.textViewSelfLiveChatComment);
         }
 
         @Override
         void bindMessage(ChatMessage message) {
+            ParseUser otherUser = message.getSender();
+            try {
+                otherUser.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             Glide.with(context)
                     .load(getProfileUrl(message.getSender()))
                     .circleCrop()
@@ -125,11 +132,17 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
             imageViewProfileOther = itemView.findViewById(R.id.imageViewProfileOther);
             textViewUsernameOther = itemView.findViewById(R.id.textViewUsername);
             textViewTimeStampOther = itemView.findViewById(R.id.textViewTimestamp);
-            textViewMessageOther = itemView.findViewById(R.id.textViewLivechatComment);
+            textViewMessageOther = itemView.findViewById(R.id.textViewChatBody);
         }
 
         @Override
         void bindMessage(ChatMessage message) {
+            ParseUser otherUser = message.getSender();
+            try {
+                otherUser.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             Glide.with(context)
                     .load(getProfileUrl(message.getSender()))
                     .circleCrop()
@@ -141,7 +154,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     }
 
     private String getProfileUrl(ParseUser sender) {
-        ParseFile file = (ParseFile) user.get("profilePicture");
+        ParseFile file = (ParseFile) sender.get("profilePicture");
         assert file != null;
         return file.getUrl();
     }

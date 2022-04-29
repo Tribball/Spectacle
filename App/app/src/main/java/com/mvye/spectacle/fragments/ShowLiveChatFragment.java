@@ -5,8 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +21,23 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.mvye.spectacle.R;
+import com.mvye.spectacle.adapters.ChatMessageAdapter;
 import com.mvye.spectacle.models.ChatMessage;
 import com.mvye.spectacle.models.ChatRoom;
 import com.mvye.spectacle.models.Show;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowLiveChatFragment extends Fragment {
 
     public static final String TAG = "ShowLiveChatFragment";
+    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     ImageView imageViewChatPoster;
     TextView textViewChatTitle;
@@ -41,6 +48,8 @@ public class ShowLiveChatFragment extends Fragment {
     Show show;
     ChatRoom room;
     List<ChatMessage> messages;
+    ChatMessageAdapter chatMessageAdapter;
+    boolean isFirstLoad;
 
     public ShowLiveChatFragment() { }
 
@@ -72,6 +81,8 @@ public class ShowLiveChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupVariables(view);
+        setupRecyclerView(view);
+        queryChatMessages();
         setupOnClick(view);
         setShowPosterAndTitle();
         Toast.makeText(getContext(), "This is a livechat for " + show.getShowName(), Toast.LENGTH_SHORT).show();
@@ -84,6 +95,36 @@ public class ShowLiveChatFragment extends Fragment {
         recyclerViewChat = view.findViewById(R.id.recyclerViewChat);
         editTextMessage = view.findViewById(R.id.editTextMessage);
         imageButtonSend = view.findViewById(R.id.imageButtonSend);
+    }
+
+    private void setupRecyclerView(View view) {
+        messages = new ArrayList<>();
+        isFirstLoad = true;
+        chatMessageAdapter = new ChatMessageAdapter(getContext(), ParseUser.getCurrentUser(), messages);
+        recyclerViewChat.setAdapter(chatMessageAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        recyclerViewChat.setLayoutManager(layoutManager);
+    }
+
+    private void queryChatMessages() {
+        ParseQuery<ChatMessage> query = room.getChatMessages().getQuery();
+        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        query.orderByDescending("createdAt");
+        query.findInBackground(new FindCallback<ChatMessage>() {
+            @Override
+            public void done(List<ChatMessage> messageList, ParseException e) {
+                if (e != null)
+                    Log.e(TAG, "Error loading messages", e);
+                messages.clear();
+                messages.addAll(messageList);
+                chatMessageAdapter.notifyDataSetChanged();
+                if (isFirstLoad) {
+                    recyclerViewChat.scrollToPosition(0);
+                    isFirstLoad = false;
+                }
+            }
+        });
     }
 
     private void setupOnClick(View view) {
