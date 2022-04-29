@@ -56,6 +56,32 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         holder.bindMessage(message);
     }
 
+    public void addItem(ChatMessage message) {
+        this.messages.add(message);
+        notifyItemInserted(getItemCount()-1);
+    }
+
+    public void removeItem(ChatMessage message) {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (messages.get(i).getObjectId().equals(message.getObjectId())) {
+                messages.remove(i);
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, getItemCount());
+                return;
+            }
+        }
+    }
+
+    public void updateItem(ChatMessage message) {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (messages.get(i).getObjectId().equals(message.getObjectId())) {
+                messages.set(i, message);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
     @Override
     public int getItemCount() {
         return messages.size();

@@ -28,7 +28,7 @@ public class ParseApplication  extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("fGx7bgUDXlRKBjh2x62hiRUTXrufAYtApzXSb9uY")
                 .clientKey("FV4MT0IymZ8cUqIazwNR17G7ONd9QU8qQjitn9XR")
-                .server("https://parseapi.back4app.com")
+                .server("https://spectacle.b4a.app/")
                 .build()
         );
 

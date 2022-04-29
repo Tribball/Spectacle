@@ -30,9 +30,12 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ShowLiveChatFragment extends Fragment {
 
@@ -50,6 +53,8 @@ public class ShowLiveChatFragment extends Fragment {
     List<ChatMessage> messages;
     ChatMessageAdapter chatMessageAdapter;
     boolean isFirstLoad;
+    private ParseLiveQueryClient parseLiveQueryClient;
+    private SubscriptionHandling<ChatMessage> subscriptionHandling;
 
     public ShowLiveChatFragment() { }
 
@@ -83,6 +88,7 @@ public class ShowLiveChatFragment extends Fragment {
         setupVariables(view);
         setupRecyclerView(view);
         queryChatMessages();
+        setupLiveQueries();
         setupOnClick(view);
         setShowPosterAndTitle();
         Toast.makeText(getContext(), "This is a livechat for " + show.getShowName(), Toast.LENGTH_SHORT).show();
@@ -103,14 +109,13 @@ public class ShowLiveChatFragment extends Fragment {
         chatMessageAdapter = new ChatMessageAdapter(getContext(), ParseUser.getCurrentUser(), messages);
         recyclerViewChat.setAdapter(chatMessageAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
         recyclerViewChat.setLayoutManager(layoutManager);
     }
 
     private void queryChatMessages() {
         ParseQuery<ChatMessage> query = room.getChatMessages().getQuery();
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByDescending("createdAt");
+        query.orderByAscending("createdAt");
         query.findInBackground(new FindCallback<ChatMessage>() {
             @Override
             public void done(List<ChatMessage> messageList, ParseException e) {
@@ -120,11 +125,43 @@ public class ShowLiveChatFragment extends Fragment {
                 messages.addAll(messageList);
                 chatMessageAdapter.notifyDataSetChanged();
                 if (isFirstLoad) {
-                    recyclerViewChat.scrollToPosition(0);
+                    recyclerViewChat.scrollToPosition(messageList.size()-1);
                     isFirstLoad = false;
                 }
             }
         });
+    }
+
+    private void setupLiveQueries() {
+        parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
+        ParseQuery<ChatMessage> query = new ParseQuery<>(ChatMessage.class);
+        query.whereEqualTo(ChatMessage.KEY_ROOM, room);
+        subscriptionHandling = parseLiveQueryClient.subscribe(query);
+        subscriptionHandling.handleSubscribe(subscribedQuery -> {
+            liveQuery();
+        });
+    }
+
+    // tried to be quirky with this function
+    private void liveQuery() {
+        if (subscriptionHandling != null) {
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, chatMessage) -> {
+                requireActivity().runOnUiThread(() -> {
+                    chatMessageAdapter.addItem(chatMessage);
+                    recyclerViewChat.scrollToPosition(messages.size()-1);
+                });
+            });
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.DELETE, (query, chatMessage) -> {
+                requireActivity().runOnUiThread(() -> {
+                    chatMessageAdapter.removeItem(chatMessage);
+                });
+            });
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.DELETE, (query, chatMessage) -> {
+                requireActivity().runOnUiThread(() -> {
+                    chatMessageAdapter.updateItem(chatMessage);
+                });
+            });
+        }
     }
 
     private void setupOnClick(View view) {
