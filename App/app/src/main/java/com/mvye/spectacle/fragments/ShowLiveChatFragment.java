@@ -22,6 +22,9 @@ import com.mvye.spectacle.R;
 import com.mvye.spectacle.models.ChatMessage;
 import com.mvye.spectacle.models.ChatRoom;
 import com.mvye.spectacle.models.Show;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -69,6 +72,7 @@ public class ShowLiveChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupVariables(view);
+        setupOnClick(view);
         setShowPosterAndTitle();
         Toast.makeText(getContext(), "This is a livechat for " + show.getShowName(), Toast.LENGTH_SHORT).show();
         super.onViewCreated(view, savedInstanceState);
@@ -80,6 +84,27 @@ public class ShowLiveChatFragment extends Fragment {
         recyclerViewChat = view.findViewById(R.id.recyclerViewChat);
         editTextMessage = view.findViewById(R.id.editTextMessage);
         imageButtonSend = view.findViewById(R.id.imageButtonSend);
+    }
+
+    private void setupOnClick(View view) {
+        imageButtonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = editTextMessage.getText().toString();
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setRoom(room);
+                chatMessage.setSender(ParseUser.getCurrentUser());
+                chatMessage.setMessage(message);
+                chatMessage.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        room.addMessage(chatMessage);
+                        room.saveInBackground();
+                    }
+                });
+                editTextMessage.setText(null);
+            }
+        });
     }
 
     private void setShowPosterAndTitle() {
