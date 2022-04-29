@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingVertical="10dp"
+    android:paddingStart="60dp"
+    android:paddingEnd="15dp">
+
+    <ImageView
+        android:id="@+id/imageViewProfileMe"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/profile_me"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textViewTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/imageViewProfileMe"
+        android:paddingBottom="4dp"
+        android:textSize="11sp"
+        tools:text="10m ago" />
+
+    <TextView
+        android:id="@+id/textViewSelfLiveChatComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTimestamp"
+        android:layout_alignEnd="@id/textViewTimestamp"
+        android:background="@drawable/message_outgoing"
+        android:layout_marginTop="5dp"
+        android:elevation="2dp"
+        android:padding="8dp"
+        android:text="@string/self_live_message"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

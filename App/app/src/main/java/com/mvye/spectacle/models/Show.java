@@ -12,6 +12,7 @@ public class Show extends ParseObject {
     public static final String KEY_CIRCLE_IMAGE = "circleImage";
     public static final String KEY_THREADS = "threads";
     public static final String KEY_SHOW_ID = "showId";
+    public static final String KEY_ROOM = "room";
 
     public Show() {}
 
@@ -33,6 +34,10 @@ public class Show extends ParseObject {
 
     public String getShowId() {
         return getString(KEY_SHOW_ID);
+    }
+
+    public ChatRoom getRoom() {
+        return (ChatRoom) getParseObject(KEY_ROOM);
     }
 
     public void setShowName(String showName) {
@@ -59,5 +64,9 @@ public class Show extends ParseObject {
 
     public void setShowId(String showId) {
         put(KEY_SHOW_ID, showId);
+    }
+
+    public void setRoom(ChatRoom room) {
+        put(KEY_ROOM, room);
     }
 }

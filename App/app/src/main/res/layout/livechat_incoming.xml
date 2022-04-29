@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="60dp"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:id="@+id/imageViewProfileOther"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/profile_other"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/imageViewProfileOther"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:paddingBottom="4dp"
+        tools:text="Username" />
+
+    <TextView
+        android:id="@+id/textViewChatBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewUsername"
+        android:layout_alignStart="@id/textViewUsername"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/imageViewProfileOther"
+        android:background="@drawable/message_incoming"
+        android:elevation="2dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        tools:text="This is a comment for a television show. I think last week's episode was trash." />
+
+    <TextView
+        android:id="@+id/textViewTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewChatBody"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/textViewUsername"
+        android:paddingBottom="4dp"
+        android:textSize="11sp"
+        tools:text="10m ago" />
+</RelativeLayout>
