@@ -17,6 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="Show Poster Image" />
+        android:contentDescription="@string/show_poster_image" />
 
 </LinearLayout>
