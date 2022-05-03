@@ -23,8 +23,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@+id/imageViewProfileOther"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:paddingBottom="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="Username" />
 
     <TextView
@@ -39,8 +39,8 @@
         android:elevation="2dp"
         android:paddingHorizontal="16dp"
         android:paddingVertical="12dp"
-        android:textSize="18sp"
         android:textColor="@color/black"
+        android:textSize="18sp"
         tools:text="This is a comment for a television show. I think last week's episode was trash." />
 
     <TextView

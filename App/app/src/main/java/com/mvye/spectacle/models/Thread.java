@@ -1,5 +1,6 @@
 package com.mvye.spectacle.models;
 
+import com.mvye.spectacle.models.Comment;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
@@ -27,6 +28,10 @@ public class Thread extends ParseObject {
 
     public ParseRelation<Comment> getComments() {
         return getRelation(KEY_COMMENTS);
+    }
+
+    public String getTestComments() {
+        return getString(KEY_COMMENTS);
     }
 
     public void setShow(Show show) {
