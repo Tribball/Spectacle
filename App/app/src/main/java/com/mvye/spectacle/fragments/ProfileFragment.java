@@ -98,6 +98,7 @@ public class ProfileFragment extends Fragment {
         Glide.with(requireContext()).load(file.getUrl())
                 .override(Target.SIZE_ORIGINAL)
                 .into(ivProfile);
+        tvUsername.setText(user.getUsername());
     }
 
     private void launchCamera() {

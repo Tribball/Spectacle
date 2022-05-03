@@ -28,7 +28,7 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivThreadProfile"
         android:text="TextView"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         tools:text="This is a comment for a television show. I think last week's episode was trash." />
 
@@ -41,6 +41,7 @@
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/tvThreadUsername"
         android:text="TextView"
+        android:textColor="#FFFFFF"
         android:textSize="11sp"
         tools:text="Timestamp" />
 
@@ -51,5 +52,6 @@
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@+id/ivThreadProfile"
         android:text="TextView"
+        android:textColor="#FFFFFF"
         tools:text="Username" />
 </RelativeLayout>

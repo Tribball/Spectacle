@@ -30,10 +30,6 @@ public class Thread extends ParseObject {
         return getRelation(KEY_COMMENTS);
     }
 
-    public String getTestComments() {
-        return getString(KEY_COMMENTS);
-    }
-
     public void setShow(Show show) {
         put(KEY_SHOW, show);
     }

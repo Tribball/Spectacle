@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000C38"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
@@ -27,6 +28,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewChatPoster"

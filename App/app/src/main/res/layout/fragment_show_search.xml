@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000C38"
     tools:context=".fragments.ShowSearchFragment">
 
     <EditText
@@ -17,7 +18,9 @@
         android:gravity="start|top"
         android:hint="Search"
         android:inputType="textMultiLine"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvShowList"

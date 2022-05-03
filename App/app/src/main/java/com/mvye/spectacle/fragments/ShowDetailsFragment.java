@@ -1,5 +1,7 @@
 package com.mvye.spectacle.fragments;
 
+import static com.mvye.spectacle.fragments.ShowLiveChatFragment.MAX_CHAT_MESSAGES_TO_SHOW;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -27,19 +30,24 @@ import com.google.android.material.button.MaterialButton;
 import com.mvye.spectacle.R;
 import com.mvye.spectacle.adapters.EpisodeAdapter;
 import com.mvye.spectacle.models.ChatRoom;
+import com.mvye.spectacle.models.Comment;
 import com.mvye.spectacle.models.Episode;
 import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
+import com.mvye.spectacle.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -51,6 +59,7 @@ public class ShowDetailsFragment extends Fragment {
     public static final String TV_SHOW_URL = "https://api.themoviedb.org/3/tv/%s?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
     public static final String TV_SHOW_SEASONS = "https://api.themoviedb.org/3/tv/%s/season/%s?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
     public static final String TAG = "ShowDetailsFragment";
+    static final int MAX_SHOWS_FOLLOWABLE = 50;
 
     ImageView imageViewPosterImage;
     TextView textViewShowName;
@@ -60,6 +69,7 @@ public class ShowDetailsFragment extends Fragment {
     Spinner spinnerSeasons;
     RecyclerView recyclerViewEpisodes;
     MaterialButton buttonLiveChat;
+    User user;
 
     Show show;
     List<Episode> episodes;
@@ -80,6 +90,7 @@ public class ShowDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
         show = getArguments().getParcelable("show");
+        user = getArguments().getParcelable("user");
     }
 
     @Override
@@ -115,6 +126,20 @@ public class ShowDetailsFragment extends Fragment {
     }
 
     private void setupButtons() {
+//        ParseUser currentUser = ParseUser.getCurrentUser();
+//        ParseQuery<ParseObject> query = user.getFollowing(currentUser).getQuery();
+//        query.setLimit(MAX_SHOWS_FOLLOWABLE);
+//        query.orderByAscending("showId");
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> followingList, ParseException e) {
+//                if (e != null)
+//                    Log.e(TAG, "Error loading followed shows", e);
+//                //Here I would iterate through list of followed shows and see if the current show
+                  //is in that list, then change text of button to follow/unfollow
+//            }
+//        });
+        buttonFollow.setText("Follow");
         buttonLiveChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,7 +210,8 @@ public class ShowDetailsFragment extends Fragment {
         for (int i = 0; i < amountOfSeasons; i++) {
             seasons[i] = seasonsArray.getJSONObject(i).getString("name");
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, seasons);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, seasons);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSeasons.setAdapter(adapter);
         spinnerSeasons.setSelection(1);
         spinnerSeasons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
