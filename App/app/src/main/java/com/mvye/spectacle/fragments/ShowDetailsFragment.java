@@ -75,6 +75,8 @@ public class ShowDetailsFragment extends Fragment {
     List<Episode> episodes;
     EpisodeAdapter episodeAdapter;
 
+    boolean isCurrentlyFollowing;
+
     public ShowDetailsFragment() {}
 
     public static ShowDetailsFragment newInstance(Show show) {
@@ -126,21 +128,18 @@ public class ShowDetailsFragment extends Fragment {
     }
 
     private void setupButtons() {
-       ParseUser currentUser = ParseUser.getCurrentUser();
-       ParseQuery<ParseObject> query = currentUser.getRelation("following").getQuery();
-       query.include("Show");
-       query.whereEqualTo("objectId", show.getObjectId());
-       query.findInBackground(new FindCallback<ParseObject>() {
-           @Override
-           public void done(List<ParseObject> shows, ParseException e) {
-               if (shows.size() != 0) {
-                   buttonFollow.setText("Unfollow");
-               }
-               else {
-                   buttonFollow.setText("Follow");
-               }
-           }
-       });
+        setInitialFollowStatus();
+        buttonFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonFollow.setClickable(false);
+                ParseRelation<ParseObject> following = ParseUser.getCurrentUser().getRelation("following");
+                if (isCurrentlyFollowing)
+                    unfollowShow(ParseUser.getCurrentUser(), following);
+                else
+                    followShow(ParseUser.getCurrentUser(), following);
+            }
+        });
         buttonLiveChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +161,50 @@ public class ShowDetailsFragment extends Fragment {
                             openLiveChatFragment(finalRoom);
                         }
                     });
+                }
+            }
+        });
+    }
+
+    private void unfollowShow(ParseUser currentUser, ParseRelation<ParseObject> following) {
+        following.remove(show);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                buttonFollow.setText(R.string.follow);
+                isCurrentlyFollowing = false;
+                buttonFollow.setClickable(true);
+            }
+        });
+    }
+
+    private void followShow(ParseUser currentUser, ParseRelation<ParseObject> following) {
+        following.add(show);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                buttonFollow.setText(R.string.unfollow);
+                isCurrentlyFollowing = true;
+                buttonFollow.setClickable(true);
+            }
+        });
+    }
+
+    private void setInitialFollowStatus() {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = currentUser.getRelation("following").getQuery();
+        query.include("Show");
+        query.whereEqualTo("objectId", show.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> shows, ParseException e) {
+                if (shows.size() != 0) {
+                    buttonFollow.setText(R.string.unfollow);
+                    isCurrentlyFollowing = true;
+                }
+                else {
+                    buttonFollow.setText(R.string.follow);
+                    isCurrentlyFollowing = false;
                 }
             }
         });
