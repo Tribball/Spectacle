@@ -148,7 +148,6 @@ public class ShowLiveChatFragment extends Fragment {
             subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, chatMessage) -> {
                 requireActivity().runOnUiThread(() -> {
                     chatMessageAdapter.addItem(chatMessage);
-                    chatMessageAdapter.addItem(chatMessage);
                     recyclerViewChat.scrollToPosition(messages.size()-1);
                 });
             });
