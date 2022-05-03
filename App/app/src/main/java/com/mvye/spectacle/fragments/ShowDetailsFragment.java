@@ -36,6 +36,7 @@ import com.mvye.spectacle.models.Show;
 import com.mvye.spectacle.models.Thread;
 import com.mvye.spectacle.models.User;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -59,7 +60,6 @@ public class ShowDetailsFragment extends Fragment {
     public static final String TV_SHOW_URL = "https://api.themoviedb.org/3/tv/%s?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
     public static final String TV_SHOW_SEASONS = "https://api.themoviedb.org/3/tv/%s/season/%s?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
     public static final String TAG = "ShowDetailsFragment";
-    static final int MAX_SHOWS_FOLLOWABLE = 50;
 
     ImageView imageViewPosterImage;
     TextView textViewShowName;
@@ -126,20 +126,21 @@ public class ShowDetailsFragment extends Fragment {
     }
 
     private void setupButtons() {
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        ParseQuery<ParseObject> query = user.getFollowing(currentUser).getQuery();
-//        query.setLimit(MAX_SHOWS_FOLLOWABLE);
-//        query.orderByAscending("showId");
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> followingList, ParseException e) {
-//                if (e != null)
-//                    Log.e(TAG, "Error loading followed shows", e);
-//                //Here I would iterate through list of followed shows and see if the current show
-                  //is in that list, then change text of button to follow/unfollow
-//            }
-//        });
-        buttonFollow.setText("Follow");
+       ParseUser currentUser = ParseUser.getCurrentUser();
+       ParseQuery<ParseObject> query = currentUser.getRelation("following").getQuery();
+       query.include("Show");
+       query.whereEqualTo("objectId", show.getObjectId());
+       query.findInBackground(new FindCallback<ParseObject>() {
+           @Override
+           public void done(List<ParseObject> shows, ParseException e) {
+               if (shows.size() != 0) {
+                   buttonFollow.setText("Unfollow");
+               }
+               else {
+                   buttonFollow.setText("Follow");
+               }
+           }
+       });
         buttonLiveChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
