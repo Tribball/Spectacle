@@ -16,6 +16,9 @@
         android:background="@drawable/roundededittext"
         android:ems="15"
         android:minHeight="35dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +33,8 @@
         android:ems="15"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:paddingStart="5dp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
