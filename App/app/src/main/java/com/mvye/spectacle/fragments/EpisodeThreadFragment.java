@@ -162,6 +162,7 @@ public class EpisodeThreadFragment extends Fragment {
                     public void done(ParseException e) {
                         thread.addComment(comment);
                         thread.saveInBackground();
+                        commentAdapter.addItem(comment);
                     }
                 });
                 threadEditTextMessage.setText(null);

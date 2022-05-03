@@ -48,6 +48,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.bindComment(comment);
     }
 
+    public void addItem(Comment comment) {
+        this.comments.add(comment);
+        notifyItemInserted(getItemCount()-1);
+    }
+
     @Override
     public int getItemCount() {
         return comments.size();
