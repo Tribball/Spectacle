@@ -71,8 +71,10 @@ public class HomeFragment extends Fragment {
     private void setCurrentProfilePicture() {
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile file = (ParseFile) user.get("profilePicture");
+        assert file != null;
         Glide.with(requireContext()).load(file.getUrl())
                 .override(Target.SIZE_ORIGINAL)
+                .circleCrop()
                 .into(ivHomeProfile);
     }
 

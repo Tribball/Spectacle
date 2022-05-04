@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFollowingShows"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/textViewFollowingShows"/>
 
     <TextView
         android:id="@+id/textViewRecommendedShows"
@@ -50,7 +50,7 @@
         android:paddingTop="24dp"
         android:paddingEnd="24dp"
         android:paddingBottom="24dp"
-        android:text="Recommended Shows"
+        android:text="@string/all_shows"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRecommendedShows"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/textViewRecommendedShows"/>
 
     <ImageView
         android:id="@+id/ivHomeProfile"
@@ -75,9 +75,9 @@
         android:background="@drawable/roundimage"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
-    tools:layout_editor_absoluteX="7dp"
-    tools:layout_editor_absoluteY="7dp"
-    tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="7dp"
+        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
