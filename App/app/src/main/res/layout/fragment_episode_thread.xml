@@ -7,8 +7,6 @@
     android:background="#000C38"
     tools:context=".fragments.EpisodeThreadFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <EditText
         android:id="@+id/threadEditTextMessage"
         android:layout_width="0dp"
@@ -55,34 +53,77 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvThreadTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
+    <ScrollView
+        android:layout_width="254dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvThreadSeason"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
-        app:layout_constraintTop_toBottomOf="@+id/tvThreadTitle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvThreadEpisode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvThreadSeason"
-        app:layout_constraintTop_toBottomOf="@+id/tvThreadTitle" />
+            <TextView
+                android:id="@+id/tvThreadTitle"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/tvThreadSeason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreadTitle"
+                tools:text="Season 1" />
+
+            <TextView
+                android:id="@+id/tvThreadEpisode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/tvThreadSeason"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreadTitle"
+                tools:text="Episode 1" />
+
+            <TextView
+                android:id="@+id/tvEpisodeName"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
+                app:layout_constraintTop_toBottomOf="@+id/tvThreadSeason"
+                tools:text="Episode Name" />
+
+            <TextView
+                android:id="@+id/tvEpisodeOverview"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/ivThreadPoster"
+                app:layout_constraintTop_toBottomOf="@+id/tvEpisodeName"
+                tools:text="Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview Episode Overview  Episode Overview " />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,6 +52,8 @@ public class EpisodeThreadFragment extends Fragment {
     TextView tvThreadTitle;
     TextView tvThreadSeason;
     TextView tvThreadEpisode;
+    TextView tvEpisodeName;
+    TextView tvEpisodeOverview;
     ImageView ivThreadPoster;
 
     Show show;
@@ -98,7 +100,7 @@ public class EpisodeThreadFragment extends Fragment {
         setupRecyclerView(view);
         queryComments();
         setupOnClick(view);
-        setShowPosterAndTitle();
+        setShowAndEpisodeDetails();
         Log.i(TAG, "This is show: " + show.getShowName() + " season " + thread.getSeasonNumber() + " episode " + thread.getEpisodeNumber() + ": " + episodeName);
         Log.i(TAG, "Overview: " + episodeOverview);
         //Log.i(TAG, "Comments: " + thread.getComments());
@@ -114,6 +116,8 @@ public class EpisodeThreadFragment extends Fragment {
         tvThreadTitle          = view.findViewById(R.id.tvThreadTitle);
         tvThreadSeason         = view.findViewById(R.id.tvThreadSeason);
         tvThreadEpisode        = view.findViewById(R.id.tvThreadEpisode);
+        tvEpisodeName          = view.findViewById(R.id.tvEpisodeName);
+        tvEpisodeOverview      = view.findViewById(R.id.tvEpisodeOverview);
         threadRecyclerViewChat = view.findViewById(R.id.threadRecyclerViewChat);
         threadEditTextMessage  = view.findViewById(R.id.threadEditTextMessage);
         threadImageButtonSend  = view.findViewById(R.id.threadImageButtonSend);
@@ -170,12 +174,14 @@ public class EpisodeThreadFragment extends Fragment {
         });
     }
 
-    private void setShowPosterAndTitle() {
+    private void setShowAndEpisodeDetails() {
         Glide.with(requireContext()).load(show.getPosterImage().getUrl())
                 .override(Target.SIZE_ORIGINAL)
                 .into(ivThreadPoster);
         tvThreadTitle.setText(String.format("%s", show.getShowName()));
         tvThreadSeason.setText(String.format("Season %s", thread.getSeasonNumber()));
         tvThreadEpisode.setText(String.format("Episode %s", thread.getEpisodeNumber()));
+        tvEpisodeName.setText(episodeName);
+        tvEpisodeOverview.setText(episodeOverview);
     }
 }
