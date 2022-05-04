@@ -35,14 +35,13 @@ import com.parse.livequery.SubscriptionHandling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ShowLiveChatFragment extends Fragment {
 
     public static final String TAG = "ShowLiveChatFragment";
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
-    ImageView imageViewChatPoster;
+    ImageView imageViewShowPoster;
     TextView textViewChatTitle;
     RecyclerView recyclerViewChat;
     EditText editTextMessage;
@@ -96,7 +95,7 @@ public class ShowLiveChatFragment extends Fragment {
     }
 
     private void setupVariables(View view) {
-        imageViewChatPoster = view.findViewById(R.id.imageViewChatPoster);
+        imageViewShowPoster = view.findViewById(R.id.imageViewShowPoster);
         textViewChatTitle = view.findViewById(R.id.textViewChatTitle);
         recyclerViewChat = view.findViewById(R.id.recyclerViewChat);
         editTextMessage = view.findViewById(R.id.editTextMessage);
@@ -188,7 +187,7 @@ public class ShowLiveChatFragment extends Fragment {
     private void setShowPosterAndTitle() {
         Glide.with(requireContext()).load(show.getPosterImage().getUrl())
                 .override(Target.SIZE_ORIGINAL)
-                .into(imageViewChatPoster);
+                .into(imageViewShowPoster);
         textViewChatTitle.setText(String.format("%s Chat", show.getShowName()));
     }
 }

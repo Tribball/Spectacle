@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#000C38"
     tools:context=".fragments.ShowSearchFragment">
 
     <EditText
-        android:id="@+id/etShowSearch"
+        android:id="@+id/editTextShowSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -22,10 +23,96 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvShowList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/etShowSearch"
-        android:layout_marginTop="10dp" />
+    <ImageButton
+        android:id="@+id/imageButtonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="4dp"
+        android:paddingEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/send"
+        android:src="@drawable/ic_send"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editTextShowSearch"
+        app:layout_constraintTop_toTopOf="@+id/editTextShowSearch" />
+
+    <ImageView
+        android:id="@+id/imageViewShowPoster"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/editTextShowSearch"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/show_poster_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewChatTitle"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextShowSearch"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="4dp"
+        android:layout_toEndOf="@+id/imageViewShowPoster"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewShowPoster"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TV Title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAddShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imageViewShowPoster"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_toEndOf="@+id/imageViewShowPoster"
+        app:cornerRadius="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewShowPoster"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChatTitle"
+        android:text="@string/add_show"/>
+
+    <ScrollView
+        android:layout_width="242dp"
+        android:layout_height="111dp"
+        android:layout_above="@+id/buttonAddShow"
+        android:layout_below="@+id/textViewChatTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toEndOf="@+id/imageViewShowPoster">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewShowDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewPosterImage"
+                app:layout_constraintTop_toBottomOf="@+id/textViewShowName"
+                tools:text="Twelve- year-old Finn battles evil in the Land of Ooo. Assisted by his magical dog...." />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

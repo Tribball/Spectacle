@@ -23,4 +23,5 @@
     <string name="self_live_message">Your outgoing message here</string>
     <string name="unfollow">Unfollow</string>
     <string name="follow">Follow</string>
+    <string name="add_show">Add Show</string>
 </resources>

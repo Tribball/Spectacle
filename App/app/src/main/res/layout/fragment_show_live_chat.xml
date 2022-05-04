@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/imageViewChatPoster"
+        android:id="@+id/imageViewShowPoster"
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:layout_alignParentStart="true"
@@ -31,7 +31,7 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewChatPoster"
+        app:layout_constraintStart_toEndOf="@+id/imageViewShowPoster"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="TV Title" />
     <EditText
@@ -77,5 +77,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewChatPoster" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewShowPoster" />
 </androidx.constraintlayout.widget.ConstraintLayout>
